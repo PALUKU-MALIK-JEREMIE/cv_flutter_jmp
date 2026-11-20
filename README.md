@@ -20,4 +20,4 @@ flutter pub get
 flutter run
 ```
 
-Identifiants de test : `jmp` / `jmp12129`
+Identifiants de test : `jmp` / `jmp121299`
