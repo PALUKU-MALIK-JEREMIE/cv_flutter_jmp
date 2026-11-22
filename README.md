@@ -8,7 +8,11 @@ reliée à une base de données **MySQL**, avec une **authentification réelle**
 
 ## 🎥 Vidéo de démonstration
 
-COLLE_ICI_LE_LIEN_https://github.com/user-attachments/assets/...
+
+
+https://github.com/user-attachments/assets/b661c9be-cff7-41d1-9f29-68638a2a0c20
+
+
 
 ## Fonctionnalités
 
