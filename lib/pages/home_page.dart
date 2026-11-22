@@ -1,8 +1,9 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'cv_page.dart';
 import 'famille_page.dart';
 import 'contact_page.dart';
 import 'login_page.dart';
+import '../services/auth_service.dart';
 
 /// Description d'une section de l'application.
 class _Section {
@@ -86,6 +87,8 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (confirme != true || !mounted) return;
+    await AuthService.logout(); // efface l'utilisateur mémorisé
+    if (!mounted) return;
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(

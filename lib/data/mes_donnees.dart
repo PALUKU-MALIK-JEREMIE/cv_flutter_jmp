@@ -5,9 +5,6 @@
 
 // ---------- 1. CONNEXION ----------
 
-const String identifiantConnexion = 'jmp';
-const String motDePasseConnexion = 'jmp121299';
-
 // ---------- 2. IDENTITÉ PROFESSIONNELLE ----------
 
 const String nomComplet = 'Jérémie Malik Paluku';
@@ -98,33 +95,6 @@ const List<String> loisirs = [
 ];
 
 // ---------- 8. FAMILLE ----------
-
-const List<Membre> famille = [
-  Membre(
-    'Hussein ARAMA',
-    'Père',
-    'Architecte',
-    'assets/images/pere.png',
-  ),
-  Membre(
-    'Solange KADIDJA',
-    'Mère',
-    'Styliste',
-    'assets/images/mere.png',
-  ),
-  Membre(
-    'Onesime TIRADA',
-    'Frère',
-    'Ingénieur en bâtiment',
-    'assets/images/frere.jpg',
-  ),
-  Membre(
-    'Angel KASIGWA',
-    'Sœur',
-    'Ingénieure en télécommunications',
-    'assets/images/soeur.png',
-  ),
-];
 
 // ---------- 9. COORDONNÉES ----------
 

@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'dart:ui';
-import 'package:material_ui/material_ui.dart';
-import '../data/mes_donnees.dart';
+import 'package:flutter/material.dart';
+import '../services/api_client.dart';
+import '../services/auth_service.dart';
+import 'register_page.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,14 +44,12 @@ class _LoginPageState extends State<LoginPage>
       _chargement = true;
       _erreur = null;
     });
-    await Future.delayed(
-        const Duration(milliseconds: 700)); // petit effet de chargement
-    if (!mounted) return;
 
-    final ok = _identifiantCtrl.text.trim() == identifiantConnexion &&
-        _motDePasseCtrl.text == motDePasseConnexion;
-
-    if (ok) {
+    try {
+      // Vraie vérification : l'API compare avec la table `account`
+      await AuthService.login(
+          _identifiantCtrl.text.trim(), _motDePasseCtrl.text);
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
@@ -58,12 +58,13 @@ class _LoginPageState extends State<LoginPage>
               FadeTransition(opacity: anim, child: child),
         ),
       );
-    } else {
+    } on ApiException catch (e) {
+      if (!mounted) return;
       setState(() {
         _chargement = false;
-        _erreur = 'Identifiant ou mot de passe incorrect';
+        _erreur = e.message; // ex. « Email ou mot de passe incorrect »
       });
-      _secousse.forward(from: 0);
+      _secousse.forward(from: 0); // ton animation de secousse est conservée
     }
   }
 
@@ -218,12 +219,13 @@ class _LoginPageState extends State<LoginPage>
                                     const SizedBox(height: 24),
                                     TextFormField(
                                       controller: _identifiantCtrl,
+                                      keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
-                                      decoration: _decoration('Identifiant',
-                                          Icons.person_outline_rounded, c),
+                                      decoration: _decoration(
+                                          'Email', Icons.email_outlined, c),
                                       validator: (v) =>
-                                          (v == null || v.trim().isEmpty)
-                                              ? 'Entrez votre identifiant'
+                                          (v == null || !v.contains('@'))
+                                              ? 'Entrez un email valide'
                                               : null,
                                     ),
                                     const SizedBox(height: 16),
@@ -289,6 +291,17 @@ class _LoginPageState extends State<LoginPage>
                                     _BoutonDegrade(
                                       chargement: _chargement,
                                       onPressed: _seConnecter,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const RegisterPage()),
+                                      ),
+                                      child: const Text(
+                                          'Pas encore de compte ? Créer un compte'),
                                     ),
                                   ],
                                 ),
